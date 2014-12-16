@@ -59,7 +59,7 @@ object Server2 extends App with SimpleRoutingApp  {
     }
   }
 
-  var ip : String = null
+  var ip : String = args(2)
   var startIdNum : Int = 0
   var partNum : Int = 0
   var router : ActorRef = null
@@ -152,7 +152,7 @@ object Server2 extends App with SimpleRoutingApp  {
       //      router ! Deliver("877", "buckero7o")
       //      router ! Deliver("878", "buckero8o")
       //     router ! RouteTimeLine(uId, ctx)
-      startServer(interface = "localhost", port = 8091) {
+      startServer(interface = ip, port = 8091) {
         get {
           path("gettweetnum") {
               println("gettweetnum")
