@@ -316,13 +316,13 @@ object Server2 extends App with SimpleRoutingApp  {
           user.fIdList.append(friend)
         }
       }
-      else{
-        var friendId = Random.nextInt(clientNum)
-        if(friendId + friendNum > clientNum)
-          friendId -= friendNum
-        for(friend <- friendId to friendId + friendNum)
-          user.fIdList.append(friend.toString())
-      }
+      // else{
+      //   var friendId = Random.nextInt(clientNum)
+      //   if(friendId + friendNum > clientNum)
+      //     friendId -= friendNum
+      //   for(friend <- friendId to friendId + friendNum)
+      //     user.fIdList.append(friend.toString())
+      // }
 
     }
     def print() {
