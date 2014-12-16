@@ -157,33 +157,33 @@ object Server2 extends App with SimpleRoutingApp  {
         get {
           path("gettweetnum") {
             complete (tweetMap.size.toString)
+              println("gettweetnum")
           }
         }~
           get {
             path("gettimeline" / Segment) { uId=>ctx=>
               println(uId)
-              router ! "fuck"
               router ! RouteTimeLine(uId, ctx)
-              println("gt")
+              println("gettimeline")
             }
           }~
           get {
             path("getsentlist" / Segment) { uId=>ctx=>
               router ! RouteSentList(uId, ctx)
-              println("st")
+              println("getsentlist")
             }
           }~
           get {
             path("getfollowerlist" / Segment) { uId=>ctx=>
               router ! RouteFollowerList(uId, ctx)
-              println("gf")
+              println("getfollowerlist")
             }
           }~
           post {
             path("posttweet" / Segment / Segment ) { (uId, tweet) => //PostTweet(uId, tweet)
 
               var tId = tweet.hashCode().toString
-              println("pt"+tId)
+              println("posttweet:"+uId+" "+tId)
               tweetMap.put(tId, uId + ": " + tweet)
               router ! Deliver(uId.toString, tId)
               complete (
@@ -193,7 +193,7 @@ object Server2 extends App with SimpleRoutingApp  {
           }~
           post {
             path("follow" / Segment / Segment ) { (uId, fId) => //uid,fid
-              println("fffflo")
+              println("follow:"+uId+" "+fId)
               router ! RouteFollow(uId, fId)
               complete (
                 "Ok"
@@ -202,7 +202,7 @@ object Server2 extends App with SimpleRoutingApp  {
           }~
           post {
             path("deletetweet" / Segment / Segment ) { (uId, tId) => //uid,fid
-              println("de")
+              println("deletetweet"+uId+" "+fId)
               router ! DeleteTweet(uId, tId)
               complete (
                 "Ok"
@@ -233,7 +233,6 @@ object Server2 extends App with SimpleRoutingApp  {
 
     def receive = {
       case PostTweet(uId, tweet) => {
-        println("fuck")
         var tId = tweet.hashCode().toString
         tweetMap.put(tId, uId + ": " + tweet)
         router ! Deliver(uId, tId)
@@ -419,7 +418,6 @@ object Server2 extends App with SimpleRoutingApp  {
         }
       }
       case "fuck" =>{
-        println("fffff")
       }
       case Print() => {
         print()
@@ -480,7 +478,7 @@ object Server2 extends App with SimpleRoutingApp  {
       }
 
       case Deliver(u, tId) => {
-        println("sadfdsaf "+u+ " "+tId)
+        println("Deliver "+u+ " "+tId)
         if(containUserByUserId(u)) {
           addToTweetList(u, tId)
         } else {
