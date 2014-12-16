@@ -139,7 +139,6 @@ object Server2 extends App with SimpleRoutingApp  {
       //      Props(new Worker(clientNum)).withRouter(RandomRouter(clientNum)), name = "workerRouter")
       implicit val actorSystem = ActorSystem()
       Thread.sleep(1000L)
-      router ! "fuck"
       //
       //      for (abc <- 0 to 250) {
       //      context.self ! PostTweet("1", "buckeroo")
