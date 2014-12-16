@@ -156,27 +156,26 @@ object Server2 extends App with SimpleRoutingApp  {
       startServer(interface = "localhost", port = 8091) {
         get {
           path("gettweetnum") {
-            complete (tweetMap.size.toString)
               println("gettweetnum")
+            complete (tweetMap.size.toString)
           }
         }~
           get {
             path("gettimeline" / Segment) { uId=>ctx=>
-              println(uId)
+              println("gettimeline:"+uId)
               router ! RouteTimeLine(uId, ctx)
-              println("gettimeline")
             }
           }~
           get {
             path("getsentlist" / Segment) { uId=>ctx=>
               router ! RouteSentList(uId, ctx)
-              println("getsentlist")
+              println("getsentlist:"+uId)
             }
           }~
           get {
             path("getfollowerlist" / Segment) { uId=>ctx=>
               router ! RouteFollowerList(uId, ctx)
-              println("getfollowerlist")
+              println("getfollowerlist:"+uId)
             }
           }~
           post {
@@ -202,7 +201,7 @@ object Server2 extends App with SimpleRoutingApp  {
           }~
           post {
             path("deletetweet" / Segment / Segment ) { (uId, tId) => //uid,fid
-              println("deletetweet"+uId+" "+fId)
+              println("deletetweet"+uId+" "+tId)
               router ! DeleteTweet(uId, tId)
               complete (
                 "Ok"
