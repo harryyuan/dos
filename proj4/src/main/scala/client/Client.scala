@@ -75,7 +75,9 @@ object Client extends App {
 
       val arguments = ln.split(" ")
 
-
+     if(arguments(0) =="help"){
+        printlines
+      }else
       if (arguments(0) == "1") {
         val clientSystem = ActorSystem("project")
         val router = clientSystem.actorOf(BroadcastPool(arguments(2).toInt).props(Props[ClientInit]), "router")
